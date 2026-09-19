@@ -1,0 +1,436 @@
+<title>Outreach Demo Script</title>
+<style>
+  :root {
+    --ink: #16232a;
+    --muted: #5b6b74;
+    --faint: #8a9aa1;
+    --canvas: #f5f8f9;
+    --card: #ffffff;
+    --hairline: #e1e7e9;
+    --accent: #0e7490;
+    --accent-dark: #0b5c73;
+    --accent-tint: #e6f1f3;
+    --good: #0ca34c;
+    --good-tint: #e8f7ee;
+    --warning: #b45309;
+    --warning-tint: #fdf3e2;
+    --critical: #b91c1c;
+    --critical-tint: #fbeaea;
+    --mono-bg: #101c22;
+    --mono-ink: #d7ecef;
+    --mono-accent: #5fd0e0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e7eef0;
+      --muted: #a9b8bd;
+      --faint: #6f8288;
+      --canvas: #0f1720;
+      --card: #17222a;
+      --hairline: #26343c;
+      --accent: #4fb8cc;
+      --accent-dark: #7fd0df;
+      --accent-tint: #163038;
+      --good: #4ed189;
+      --good-tint: #133423;
+      --warning: #f0b354;
+      --warning-tint: #3a2c12;
+      --critical: #f28b82;
+      --critical-tint: #3a1c1c;
+      --mono-bg: #0a1216;
+      --mono-ink: #cdeaef;
+      --mono-accent: #7fe3f0;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #e7eef0;
+    --muted: #a9b8bd;
+    --faint: #6f8288;
+    --canvas: #0f1720;
+    --card: #17222a;
+    --hairline: #26343c;
+    --accent: #4fb8cc;
+    --accent-dark: #7fd0df;
+    --accent-tint: #163038;
+    --good: #4ed189;
+    --good-tint: #133423;
+    --warning: #f0b354;
+    --warning-tint: #3a2c12;
+    --critical: #f28b82;
+    --critical-tint: #3a1c1c;
+    --mono-bg: #0a1216;
+    --mono-ink: #cdeaef;
+    --mono-accent: #7fe3f0;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    margin: 0;
+    padding: 0 16px 96px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  h1, h2, h3 { font-family: "Sora", -apple-system, sans-serif; text-wrap: balance; }
+  code, .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+  /* ---------- Header ---------- */
+  header.hero {
+    padding: 56px 0 28px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+  }
+  .eyebrow::before {
+    content: ""; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent); display: inline-block;
+  }
+  h1.title {
+    font-size: 34px; font-weight: 700; letter-spacing: -0.01em;
+    margin: 10px 0 8px; color: var(--ink);
+  }
+  p.subtitle { color: var(--muted); font-size: 17px; margin: 0; max-width: 58ch; }
+
+  /* ---------- Reference card ---------- */
+  .refcard {
+    background: var(--card); border: 1px solid var(--hairline); border-radius: 14px;
+    padding: 22px 24px; margin: 28px 0 40px;
+    display: grid; gap: 18px; grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 620px) { .refcard { grid-template-columns: 1fr; } }
+  .refcard h3 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--faint); margin: 0 0 10px; font-weight: 600;
+  }
+  .refcard .url {
+    font-family: "IBM Plex Mono", monospace; font-size: 15px; color: var(--accent-dark);
+    background: var(--accent-tint); border-radius: 8px; padding: 6px 10px; display: inline-block;
+  }
+  table.creds { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  table.creds th {
+    text-align: left; font-weight: 600; color: var(--faint); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.04em; padding-bottom: 6px;
+  }
+  table.creds td { padding: 5px 8px 5px 0; border-top: 1px solid var(--hairline); vertical-align: top; }
+  table.creds td.role { font-weight: 600; white-space: nowrap; }
+  table.creds td.email { font-family: "IBM Plex Mono", monospace; color: var(--muted); font-size: 12.5px; }
+  .pw-note { margin-top: 8px; font-size: 12.5px; color: var(--faint); }
+  .pw-note code { background: var(--accent-tint); color: var(--accent-dark); padding: 1px 6px; border-radius: 5px; }
+
+  /* ---------- Preflight ---------- */
+  .preflight {
+    border: 1px dashed var(--hairline); border-radius: 12px; padding: 18px 20px;
+    margin-bottom: 44px; background: var(--card);
+  }
+  .preflight h3 { margin: 0 0 10px; font-size: 15px; }
+  .preflight ol { margin: 0; padding-left: 20px; }
+  .preflight li { margin-bottom: 6px; font-size: 14.5px; }
+  .preflight code {
+    background: var(--canvas); border: 1px solid var(--hairline); border-radius: 6px;
+    padding: 1px 7px; font-size: 13px;
+  }
+
+  /* ---------- Acts ---------- */
+  section.act {
+    position: relative;
+    padding: 6px 0 6px 28px;
+    margin-bottom: 52px;
+    border-left: 3px solid var(--accent);
+  }
+  section.act .act-num {
+    position: absolute; left: -19px; top: -4px;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Sora", sans-serif; font-weight: 700; font-size: 14px;
+  }
+  section.act h2 {
+    font-size: 21px; margin: 4px 0 4px 6px; color: var(--ink);
+  }
+  section.act .timing {
+    margin: 0 0 16px 6px; font-size: 12.5px; color: var(--faint);
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .say {
+    font-family: "Sora", sans-serif; font-style: normal; font-weight: 500;
+    font-size: 18px; line-height: 1.5; color: var(--ink);
+    background: var(--accent-tint); border-radius: 12px;
+    padding: 16px 20px; margin: 0 0 14px 6px;
+  }
+  .say .tag, .do .tag, .watch .tag {
+    display: block; font-family: "IBM Plex Mono", monospace; font-size: 10.5px;
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+    margin-bottom: 6px; color: var(--accent-dark);
+  }
+
+  .do {
+    background: var(--card); border: 1px solid var(--hairline); border-radius: 12px;
+    padding: 16px 20px; margin: 0 0 14px 6px; font-size: 14.5px;
+  }
+  .do .tag { color: var(--muted); }
+  .do ol, .do ul { margin: 0; padding-left: 20px; }
+  .do li { margin-bottom: 5px; }
+  .do .cmd {
+    display: block; margin-top: 10px; background: var(--mono-bg); color: var(--mono-ink);
+    border-radius: 8px; padding: 10px 14px; font-family: "IBM Plex Mono", monospace;
+    font-size: 13px; overflow-x: auto;
+  }
+  .do .cmd .prompt { color: var(--mono-accent); }
+
+  .watch {
+    font-size: 13.5px; color: var(--muted); margin: 0 0 0 6px;
+    display: flex; gap: 8px; align-items: baseline;
+  }
+  .watch .tag { color: var(--good); margin-bottom: 0; }
+
+  .warn-box {
+    background: var(--warning-tint); border-radius: 10px; padding: 12px 16px;
+    margin: 12px 0 0 6px; font-size: 13.5px; color: var(--ink);
+  }
+  .warn-box strong { color: var(--warning); }
+
+  /* ---------- Closing ---------- */
+  .closing {
+    background: var(--ink); color: var(--canvas); border-radius: 16px;
+    padding: 32px 30px; margin: 8px 0 48px;
+  }
+  :root[data-theme="dark"] .closing, @media (prefers-color-scheme: dark) { }
+  .closing h2 { color: #fff; font-size: 20px; margin: 0 0 10px; }
+  .closing p { font-size: 17px; line-height: 1.6; margin: 0; color: #dce8ea; font-family: "Sora", sans-serif; font-weight: 500; }
+
+  /* ---------- FAQ ---------- */
+  .faq h2 { font-size: 22px; margin-bottom: 20px; }
+  .faq-item { border-bottom: 1px solid var(--hairline); padding: 16px 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { font-weight: 600; font-size: 15px; margin-bottom: 6px; color: var(--ink); }
+  .faq-a { font-size: 14.5px; color: var(--muted); }
+
+  footer.foot { text-align: center; color: var(--faint); font-size: 12.5px; padding-top: 20px; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    section.act { break-inside: avoid; }
+    .closing { background: #eee; color: #000; }
+    .closing p { color: #000; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow">Live Demo &middot; ~12 minutes</span>
+    <h1 class="title">Outreach Platform — Demo Script</h1>
+    <p class="subtitle">A five-act walkthrough that shows the platform doing its actual job, not a feature tour — built so you can present it yourself, live, with confidence.</p>
+  </header>
+
+  <div class="refcard">
+    <div>
+      <h3>App URL</h3>
+      <span class="url">localhost:5180</span>
+      <h3 style="margin-top:18px">Health check (2nd tab)</h3>
+      <span class="url">localhost:4010/health</span>
+    </div>
+    <div>
+      <h3>Demo Logins</h3>
+      <table class="creds">
+        <tr><th>Role</th><th>Email</th></tr>
+        <tr><td class="role">Platform Admin</td><td class="email">platform.admin@outreach.dev</td></tr>
+        <tr><td class="role">Hospital Admin</td><td class="email">admin@riverside-general.dev</td></tr>
+        <tr><td class="role">Campaign Mgr</td><td class="email">campaigns@riverside-general.dev</td></tr>
+        <tr><td class="role">Clinical Reviewer</td><td class="email">reviewer@riverside-general.dev</td></tr>
+      </table>
+      <p class="pw-note">Same password for every login: <code>ChangeMe123!</code></p>
+    </div>
+  </div>
+
+  <div class="preflight">
+    <h3>Before you start</h3>
+    <ol>
+      <li>Confirm the app loads: open <code>localhost:5180</code>, you should land on a sign-in screen.</li>
+      <li>Open two spare terminal tabs in <code>hospital/server</code> — you'll run one command in each, live, during Act 2 and Act 4.</li>
+      <li>In your head, note tonight's escalation: <strong>William Williams, MRN RIV&#8209;000006</strong>, at Riverside General — a real, still-open case where the two independent AI checks disagreed. That's the one you'll open in Act 3.</li>
+      <li>If that one's already been resolved from a rehearsal, open Escalations and pick any row still marked <strong>open</strong> — Lakeside Medical and Metro Health each have two more of the same kind untouched (see the note in Act 3).</li>
+    </ol>
+  </div>
+
+  <!-- ACT 0 -->
+  <section class="act">
+    <span class="act-num">0</span>
+    <h2>Open with the problem, not the product</h2>
+    <div class="timing">before you touch the keyboard</div>
+    <div class="say">
+      <span class="tag">Say</span>
+      "Every day, hospitals discharge patients who need a follow-up call — but staff can't personally call everyone. Symptoms that should raise a flag get missed simply because nobody got to them in time. This platform automates that follow-up end to end, and it never lets an AI make the final call alone on anything that actually matters."
+    </div>
+    <div class="watch"><span class="tag">Land</span> This is the one sentence you want them to remember. Say it slowly.</div>
+  </section>
+
+  <!-- ACT 1 -->
+  <section class="act">
+    <span class="act-num">1</span>
+    <h2>Act 1 — One platform, many hospitals, zero leakage</h2>
+    <div class="timing">~90 seconds</div>
+    <div class="say">
+      <span class="tag">Say</span>
+      "This isn't one hospital's tool. It's a real multi-tenant platform — and tenant isolation is enforced at the database layer, not just filtered in the UI."
+    </div>
+    <div class="do">
+      <span class="tag">Do</span>
+      <ol>
+        <li>Log in as <strong>Platform Admin</strong>.</li>
+        <li>Sit on the overview for a beat — point out <em>Hospitals</em>, <em>AI usage</em>, <em>Errors</em>, <em>System performance</em> panels.</li>
+        <li>Click into <strong>Hospitals</strong>, open Riverside General — this is what onboarding a new hospital looks like.</li>
+        <li>Sign out.</li>
+      </ol>
+    </div>
+    <div class="watch"><span class="tag">Watch for</span> The sidebar itself is the proof — Platform Admin never even has a Patients link. That's a permission grant, not a hidden button.</div>
+  </section>
+
+  <!-- ACT 2 -->
+  <section class="act">
+    <span class="act-num">2</span>
+    <h2>Act 2 — A hospital's whole operation, on one screen</h2>
+    <div class="timing">~2 minutes</div>
+    <div class="say">
+      <span class="tag">Say</span>
+      "Here's what a Hospital Admin sees — every number on this page is live, not a mockup."
+    </div>
+    <div class="do">
+      <span class="tag">Do</span>
+      <ol>
+        <li>Log in as <strong>Hospital Admin</strong> (Riverside General).</li>
+        <li>Walk the Overview page top to bottom: patient count, queue state grouped by <em>waiting / needs attention / done</em>, escalations, real EHR write activity.</li>
+        <li>Click <strong>Protocols</strong>. Open the one titled <em>Post&#8209;Discharge Red&#8209;Flag Protocol</em>.</li>
+      </ol>
+    </div>
+    <div class="say" style="margin-top:14px">
+      <span class="tag">Say</span>
+      "The AI doesn't improvise what to ask a patient. This exact document — written by the hospital, tagged by symptom — is what it's grounded in and what it cites as evidence every time something gets flagged."
+    </div>
+  </section>
+
+  <!-- ACT 3 -->
+  <section class="act">
+    <span class="act-num">3</span>
+    <h2>Act 3 — Scale: watch the queue run</h2>
+    <div class="timing">~2.5 minutes, mostly watching the terminal</div>
+    <div class="say">
+      <span class="tag">Say</span>
+      "Outbound calling has hard limits — capacity, clinical deadlines, retry budgets. This isn't 'call everyone at once.' Watch the real scheduler."
+    </div>
+    <div class="do">
+      <span class="tag">Do — in your first spare terminal</span>
+      <ol>
+        <li><code>cd hospital/server</code></li>
+        <li>Run the command below and let it play out on screen — don't narrate every line, let it breathe for a few seconds first.</li>
+      </ol>
+      <span class="cmd"><span class="prompt">$</span> npm run queue:simulate</span>
+    </div>
+    <div class="say" style="margin-top:14px">
+      <span class="tag">Say, once it's mid-run</span>
+      "Every tick, capacity is strictly enforced — that number never gets exceeded, even with dozens of eligible patients waiting. Priority isn't insertion order, it's risk plus deadline pressure plus retry history. And in this single run you'll see every required outcome: a retry that exhausts into a manual follow-up, a callback that gets honored, a dropped call that recovers, a real escalation. It's deterministic — run it a hundred times, get the same guarantees every time."
+    </div>
+    <div class="warn-box"><strong>Note:</strong> this command creates its own throwaway demo hospital each run — that's intentional and harmless, it never touches Riverside/Lakeside/Metro's data.</div>
+  </section>
+
+  <!-- ACT 4 -->
+  <section class="act">
+    <span class="act-num">4</span>
+    <h2>Act 4 — One patient, followed all the way through</h2>
+    <div class="timing">~3 minutes — the emotional core, take your time here</div>
+    <div class="say">
+      <span class="tag">Say</span>
+      "Now the story that actually matters: a real patient, a real conversation, and what happens the moment the AI isn't sure."
+    </div>
+    <div class="do">
+      <span class="tag">Do</span>
+      <ol>
+        <li>Back in the browser, click <strong>Escalations</strong>.</li>
+        <li>Open <strong>William Williams</strong> (RIV&#8209;000006) — status <em>open</em>, trigger <em>ai_triage_disagreement</em>. (Backup targets if needed: Lakeside Medical has <em>Thomas Jones</em> and <em>Charles Silva</em>; Metro Health has <em>Mary Gonzalez</em> and <em>Susan Davis</em> — same story, different hospital.)</li>
+      </ol>
+    </div>
+    <div class="say" style="margin-top:14px">
+      <span class="tag">Say</span>
+      "Two independent AI assessments looked at the same conversation. One read it as routine. The other caught something concerning in the patient's own words. When they disagree, the system never guesses — it always takes the more cautious reading and puts a human in the loop."
+    </div>
+    <div class="do">
+      <span class="tag">Do</span>
+      <ol>
+        <li>Scroll to show the transcript, both assessments side by side, and the consensus rationale.</li>
+        <li>Click <strong>Acknowledge</strong> &rarr; <strong>Start review</strong>.</li>
+        <li>Type a one-line resolution — anything genuine, e.g. <em>"Advised patient to seek in-person evaluation today."</em></li>
+        <li>Click <strong>Resolve</strong>.</li>
+      </ol>
+    </div>
+    <div class="say" style="margin-top:14px">
+      <span class="tag">Say</span>
+      "Acknowledged, reviewed, resolved — every step timestamped and audited. The AI surfaced the concern. A clinician decided what to do about it."
+    </div>
+  </section>
+
+  <!-- ACT 5 -->
+  <section class="act">
+    <span class="act-num">5</span>
+    <h2>Act 5 — Proof, not promises</h2>
+    <div class="timing">~2 minutes</div>
+    <div class="say">
+      <span class="tag">Say</span>
+      "Anyone can claim their AI is safe. We measure it, every single time, against a fixed test set — not a cherry-picked demo."
+    </div>
+    <div class="do">
+      <span class="tag">Do — in your second spare terminal</span>
+      <ol>
+        <li><code>cd hospital/server</code></li>
+        <li>Run it and let the summary print fully before you speak again.</li>
+      </ol>
+      <span class="cmd"><span class="prompt">$</span> npm run safety:evaluate</span>
+    </div>
+    <div class="say" style="margin-top:14px">
+      <span class="tag">Say, pointing at the summary</span>
+      "Fourteen hand-written cases across every category that matters — routine, urgent, ambiguous, conflicting information, even adversarial attempts to talk the AI out of escalating. Zero missed high-risk cases. And where the system still has real limitations, the report says so in plain language — a safety report you can't trust is worse than no report at all."
+    </div>
+  </section>
+
+  <div class="closing">
+    <h2>Close</h2>
+    <p>"This isn't an AI phone bot with a chat window bolted on. It's a queue-driven, multi-tenant operations platform that takes a patient from discharge through outreach, triage, human review, and a documented outcome — with a real safety net at every step where it counts."</p>
+  </div>
+
+  <div class="faq">
+    <h2>If they push back — quick answers</h2>
+    <div class="faq-item">
+      <div class="faq-q">"Is the AI conversation actually live, or scripted?"</div>
+      <div class="faq-a">Both exist. The Voice Intake Agent is a deterministic simulator for the required demo (real telephony is explicitly a stretch goal, not required), but the triage/consensus logic you just watched decide the escalation is the exact same code path that runs in production — not a separate demo-only shortcut.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">"What stops one hospital from seeing another's patients?"</div>
+      <div class="faq-a">Two independent layers: every query is scoped by hospital ID in application code, and Postgres Row-Level Security enforces the same boundary at the database layer as a backstop — so even a bug in the app code can't leak data across tenants.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">"What happens if the AI provider goes down?"</div>
+      <div class="faq-a">A circuit breaker opens after repeated failures and the system falls back to a conservative default — escalate for human review — rather than silently guessing or failing calls outright.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">"How do you know the queue won't overload the phone lines?"</div>
+      <div class="faq-a">Capacity is enforced centrally with row-level locking at claim time — proven under actual concurrent load in the test suite, not just assumed. You just watched it hold the line in the simulation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">"What's still missing / not production-ready?"</div>
+      <div class="faq-a">Real telephony (currently simulated by design — a documented stretch goal), and a handful of prototype-level tradeoffs disclosed candidly in the project's own known-limitations doc rather than hidden. Happy to walk through them.</div>
+    </div>
+  </div>
+
+  <footer class="foot">Outreach Platform &middot; Demo Script &middot; run it once quietly to yourself before you run it for them</footer>
+
+</div>

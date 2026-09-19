@@ -1,0 +1,1 @@
+ALTER TABLE "hospitals" ADD COLUMN "mock_ehr_config" jsonb DEFAULT '{}'::jsonb NOT NULL;

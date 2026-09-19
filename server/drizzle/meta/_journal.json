@@ -1,0 +1,160 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789664274996,
+      "tag": "0000_high_goblin_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789664280874,
+      "tag": "0001_enable_row_level_security",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789669087713,
+      "tag": "0002_whole_wind_dancer",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789669094021,
+      "tag": "0003_enable_rls_on_escalations",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1789670010879,
+      "tag": "0004_first_exodus",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1789670016926,
+      "tag": "0005_enable_rls_on_campaigns",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1789673102750,
+      "tag": "0006_nostalgic_mauler",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1789673109093,
+      "tag": "0007_enable_rls_on_outreach",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1789685790779,
+      "tag": "0008_abandoned_kabuki",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1789685790780,
+      "tag": "0009_enable_rls_on_protocols",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1789686730189,
+      "tag": "0010_long_doorman",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1789686730190,
+      "tag": "0011_enable_rls_on_audit_log",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1789687764737,
+      "tag": "0012_clear_mandroid",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1789687902184,
+      "tag": "0013_zippy_vapor",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1789687902185,
+      "tag": "0014_enable_rls_on_notifications",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1789688848168,
+      "tag": "0015_many_maggott",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1789688848169,
+      "tag": "0016_enable_rls_on_app_events",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1789755782036,
+      "tag": "0017_massive_fantastic_four",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1789755856985,
+      "tag": "0018_enable_rls_on_ai_call_log",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1789755908613,
+      "tag": "0019_slippery_stone_men",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1789756224900,
+      "tag": "0020_smooth_micromacro",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1789757755750,
+      "tag": "0021_reconcile_idempotency_keys",
+      "breakpoints": true
+    }
+  ]
+}

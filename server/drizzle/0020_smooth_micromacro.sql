@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "outreach_tasks_active_unique_idx" ON "outreach_tasks" USING btree ("hospital_id","campaign_id","patient_id","encounter_id") WHERE "outreach_tasks"."status" NOT IN ('completed', 'cancelled', 'failed');
